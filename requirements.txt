@@ -1,0 +1,14 @@
+selene==2.0.0rc7
+pytest==6.2.4
+uuid==1.30
+pytest-testdox==2.0.1
+pytest-env==0.6.2
+pytest-rerunfailures==9.1.1
+faker==8.1.0
+allure-pytest==2.8.40
+pytest-xdist==2.2.1
+selenium-wire==4.6.4
+urllib3==1.26.18
+selenium==4.12.0
+
+
