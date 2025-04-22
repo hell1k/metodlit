@@ -12,6 +12,15 @@ class CheckoutPage(BasePage):
     courier_delivery_btn = s("//span[contains(text(), 'Доставка курьером')]")
     courier_delivery_list = ss("//label[contains(@for, 'choice-courierType')]")
     comment_field = s("//textarea[@name='Model.comment']")
+    street = s("//input[@name='street']")
+    home = s("//input[@name='home']")
+    housing = s("//input[@name='housing']")
+    entrance = s("//input[@name='entrance']")
+    flat = s("//input[@name='flat']")
+    intercom = s("//input[@name='intercom']")
+    index = s("//input[@name='index']")
+    cart_list_info = s("//div[@class='cart-list__info']/a")
+    agreement_checkbox = s("//label[@for='agreemnt']")
 
     def get_delivery_price(self):
         return self.get_number_from_element(self.delivery_price)
@@ -42,3 +51,36 @@ class CheckoutPage(BasePage):
     @allure.step("Добавление комментария")
     def set_comment(self):
         self.set_text(self.comment_field, faker.Faker().text())
+
+    @allure.step("Добавление адреса")
+    def set_address(self):
+        self.click_button("Добавить адрес доставки")
+        self.set_text(self.street, 'Пушкина', 'улица')
+        self.set_text(self.home, '1', 'Дом')
+        self.set_text(self.housing, '1', 'Кор./стр.')
+        self.set_text(self.entrance, '1', 'Подъезд')
+        self.set_text(self.flat, '1', 'Квартира')
+        self.set_text(self.intercom, '1', 'Домофон')
+        self.set_text(self.index, '123456', 'Индекс')
+        self.click_button("Сохранить")
+        self.checking_text("123456, г. Новосибирск, Пушкина, д. 1, стр. 1, под. 1, кв. 1, домофон 1")
+        self.click(s('//span[contains(text(), "123456, г. Новосибирск, Пушкина, д. 1, стр. 1, под. 1, кв. 1, домофон 1")]'))
+
+    @allure.step("Проверка данных на странице Проверка")
+    def checking_final_page_courier(self, card_name, total_sum):
+        assert card_name in self.get_element_text(self.cart_list_info), "Название карточки не соответствует названию в чекауте"
+        self.checking_text("Тестов")
+        self.checking_text("Тест")
+        self.checking_text("79237079068")
+        self.checking_text("hell1k@yandex.ru")
+        self.checking_text("Курьер")
+        self.checking_text("Банковской картой онлайн")
+        self.checking_text("123456, г. Новосибирск, Пушкина, д. 1, стр. 1, под. 1, кв. 1, домофон 1")
+        assert total_sum == self.get_number_from_element(self.total_sum), f"Итоговая сумма на странице Проверка не соответствует {total_sum}"
+        with allure.step("Проверка неактивной кнопки 'Проверить заказа и оплатить'"):
+            assert 'disable' in self.get_attribute(self.get_button("Проверить заказ и оплатить"), 'class'), "Кнопка 'Проверить заказа и оплатить' активна"
+        self.click(self.agreement_checkbox, "чекбокс пользовательского соглашения")
+        self.wait_a_second()
+        with allure.step("Проверка активной кнопки 'Проверить заказа и оплатить'"):
+            assert 'disable' not in self.get_attribute(self.get_button("Проверить заказ и оплатить"), 'class'), "Кнопка 'Проверить заказа и оплатить' не активна"
+

@@ -189,7 +189,6 @@ class BasePage:
     def get_number_from_string(self, string):
         return int(re.sub('[^0-9]', "", string))
 
-
     # @allure.step("get_field_value js")
     def execute_script(self, script):
         return browser.driver.execute_script(script)
@@ -227,3 +226,6 @@ class BasePage:
 
     def get_element_screenshot(self, element, file_name):
         self.get_element(element).screenshot(file_name)
+
+    def get_button(self, button_text):
+        return s(f"//button[contains(text(), '{button_text}')]")

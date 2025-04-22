@@ -6,7 +6,6 @@ from selene.api import s, ss
 
 
 class CartPage(BasePage):
-
     card_name = s("//a[@class='cart-list__name']")
     cards_name = ss("//a[@class='cart-list__name']")
     card_price = s("//div[@class='cart-list__priest']/div")
@@ -17,6 +16,7 @@ class CartPage(BasePage):
     empty_cart_btn = s("//a[text()='Выбрать товары']")
     increase_quantity_btn = s("//div[@class='actions__plus']")
     making_order_btn = s("//button[contains(text(), 'Оформить заказ') and contains(@class, 'cart-page__btn')]")
+    card_list = ss("//div[@class='cart-list__info']/a")
 
     def __init__(self):
         self.menu = Header()
@@ -38,7 +38,7 @@ class CartPage(BasePage):
         for i in range(len(cards_title)):
             assert cards_title_lower[i] in product_list_lower, f"{product_list[i]} не содержится в корзине"
 
-    @allure.step("Получение названий карточек в корзине")
+    # @allure.step("Получение названий карточек в корзине")
     def get_cards_title(self):
         self.wait_element(self.card_name)
         cards_list = []
@@ -75,12 +75,20 @@ class CartPage(BasePage):
     def checking_min_price(self):
         cart_price = self.get_number_from_element(self.total_sum)
         counter = 1
+        cards_amount = self.get_elements_amount(self.card_list)
         while cart_price < 550:
             with allure.step("Увеличение количества товаров в корзине"):
                 self.click(self.increase_quantity_btn, "кнопка увеличения количества товара '+'")
                 self.wait_a_moment()
                 counter += 1
-                self.wait_element(s(f"//div[@class='quotation__name quotation__name--big' and contains(text(), '{str(counter)}')]"), f"количество товаров - {counter}")
+                if cards_amount == 2:
+                    self.wait_element(
+                        s(f"//div[@class='quotation__name quotation__name--big' and contains(text(), '{str(counter + 2)}')]"),
+                        f"количество товаров - {counter * 2}")
+                else:
+                    self.wait_element(
+                        s(f"//div[@class='quotation__name quotation__name--big' and contains(text(), '{str(counter)}')]"),
+                        f"количество товаров - {counter}")
                 cart_price = self.get_number_from_element(self.total_sum)
 
     @allure.step("Клик по кнопке Оформить заказ")
