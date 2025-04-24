@@ -8,7 +8,7 @@ from selene.api import s, ss
 class CartPage(BasePage):
     card_name = s("//a[@class='cart-list__name']")
     cards_name = ss("//a[@class='cart-list__name']")
-    card_price = s("//div[@class='cart-list__priest']/div")
+    card_price = s("//div[@class='cart-list__priest cart-list__priest-sum']/div")
     total_sum = s("//div[@class='quotation__val quotation__val--big']")
     card_article = s("//div[@class='cart-list__option' and contains(text(), 'Артикул')]")
     delete_btns = ss("//a[@class='cart-list__del']")
