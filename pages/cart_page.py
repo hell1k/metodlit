@@ -50,8 +50,7 @@ class CartPage(BasePage):
     @allure.step("Проверка цены товара '{price}'")
     def checking_product_price(self, price):
         cart_price = str(self.get_number_from_element(self.card_price))
-        assert price == cart_price, f'Цена в корзине не соответствует цене в карточке.'
-        'В корзине - {cart_price}. В карточке - {price}'
+        assert price == cart_price, f'Цена в корзине не соответствует цене в карточке. В корзине - {cart_price}. В карточке - {price}'
 
     @allure.step("Проверка артикула '{article}")
     def checking_article(self, card_article):
