@@ -63,8 +63,8 @@ class CheckoutPage(BasePage):
         self.set_text(self.intercom, '1', 'Домофон')
         self.set_text(self.index, '123456', 'Индекс')
         self.click_button("Сохранить")
-        self.checking_text("123456, г. Новосибирск, Пушкина, д. 1, стр. 1, под. 1, кв. 1, домофон 1")
-        self.click(s('//span[contains(text(), "123456, г. Новосибирск, Пушкина, д. 1, стр. 1, под. 1, кв. 1, домофон 1")]'))
+        self.checking_text("Пушкина, д. 1, стр. 1, под. 1, кв. 1, домофон 1")
+        self.click(s('//span[contains(text(), "Пушкина, д. 1, стр. 1, под. 1, кв. 1, домофон 1")]'))
 
     @allure.step("Проверка данных на странице Проверка")
     def checking_final_page_courier(self, card_name, total_sum):
@@ -75,7 +75,7 @@ class CheckoutPage(BasePage):
         self.checking_text("hell1k@yandex.ru")
         self.checking_text("Курьер")
         self.checking_text("Банковской картой онлайн")
-        self.checking_text("123456, г. Новосибирск, Пушкина, д. 1, стр. 1, под. 1, кв. 1, домофон 1")
+        self.checking_text("Пушкина, д. 1, стр. 1, под. 1, кв. 1, домофон 1")
         assert total_sum == self.get_number_from_element(self.total_sum), f"Итоговая сумма на странице Проверка не соответствует {total_sum}"
         with allure.step("Проверка неактивной кнопки 'Проверить заказа и оплатить'"):
             assert 'disable' in self.get_attribute(self.get_button("Проверить заказ и оплатить"), 'class'), "Кнопка 'Проверить заказа и оплатить' активна"
