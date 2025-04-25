@@ -68,7 +68,8 @@ class CheckoutPage(BasePage):
 
     @allure.step("Проверка данных на странице Проверка")
     def checking_final_page_courier(self, card_name, total_sum):
-        assert card_name in self.get_element_text(self.cart_list_info), "Название карточки не соответствует названию в чекауте"
+        with allure.step(f"Проверка наличия товара '{card_name}'"):
+            assert card_name in self.get_element_text(self.cart_list_info), "Название карточки не соответствует названию в чекауте"
         self.checking_text("Тестов")
         self.checking_text("Тест")
         self.checking_text("79237079068")
