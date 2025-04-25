@@ -13,6 +13,7 @@ class TestPayment:
     def test_making_order_with_courier(self):
         page = MainPage()
         page.auth.authorization()
+        page.open_base_url()
         page.header.open_random_section()
         page.catalog.open_random_card()
         card_name = page.card.get_name()
