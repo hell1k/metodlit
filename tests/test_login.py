@@ -8,15 +8,9 @@ from pages.main_page import MainPage
 @pytest.mark.usefixtures("setup", "click_correct_city_btn", "close_cookie")
 class TestLogin:
 
-    @allure.title("Авторизация с валидными данными")
-    @pytest.mark.smoke
-    def test_authorization(self):
-        page = MainPage()
-        page.auth.authorization()
-
     @allure.title("Авторизация с невалидными данными")
     @allure.link("https://team-cm5u.testit.software/projects/1/tests/52")
     @pytest.mark.smoke
-    def test_authorization(self):
+    def test_invalid_authorization(self):
         page = MainPage()
         page.auth.invalid_authorization()
