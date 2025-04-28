@@ -9,6 +9,7 @@ from pages.main_page import MainPage
 class TestPayment:
 
     @allure.title("Оформление заказа. Доставка курьером")
+    @allure.link("https://team-cm5u.testit.software/projects/1/tests/49")
     @pytest.mark.smoke
     def test_making_order_with_courier(self):
         page = MainPage()

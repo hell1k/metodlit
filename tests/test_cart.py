@@ -9,6 +9,7 @@ from pages.main_page import MainPage
 class TestCart:
 
     @allure.title("Добавление товара в корзину. Проверка данных добавленного товара")
+    @allure.link("https://team-cm5u.testit.software/projects/1/tests/48")
     @pytest.mark.smoke
     def test_add_to_cart(self):
         page = MainPage()
@@ -24,6 +25,7 @@ class TestCart:
         # page.cart.checking_article(card_article)
 
     @allure.title("Добавление нескольких товаров в корзину. Очистка корзины")
+    @allure.link("https://team-cm5u.testit.software/projects/1/tests/47")
     @pytest.mark.smoke
     def test_add_to_cart_several_products(self):
         page = MainPage()

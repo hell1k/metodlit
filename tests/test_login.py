@@ -15,6 +15,7 @@ class TestLogin:
         page.auth.authorization()
 
     @allure.title("Авторизация с невалидными данными")
+    @allure.link("https://team-cm5u.testit.software/projects/1/tests/52")
     @pytest.mark.smoke
     def test_authorization(self):
         page = MainPage()
